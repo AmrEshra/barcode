@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Read barcode in java</title>
+    <meta charset="utf-8">
+</head>
+<body style="margin:0">
+    <div style="background-color:#f8f8f8;border-bottom:1px solid #eee;margin-bottom:10px;padding:20px;">
+        <style type="text/css">
+        	div,p,h1,a{font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;}
+            .btn-download{display:inline-block;margin-top:18px;padding: 10px 20px;text-decoration:none;font-size: 16px;color: #fe8e14;border: 2px solid #fe8e14;border-radius: 3px;text-align: center;transition: all .2s ease-in-out;font-family:"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;}
+            .btn-download:hover{color: #ffae38;border-color: #ffae38;}
+            .a-codeGallery{font-size:14px;text-decoration:none;color:#50a8e1;}
+            .a-codeGallery:hover{color:#5ebbd7;}
+        </style>
+    </div>
+    <div style="width:980px;height:482px;margin:auto;">
+    	Write the path of result file
+    	<input id="path" type="text" style="width: 500px;">
+    	</br>
+    	</br>
+        Choose a file to upload and decode barcode(s): 
+        <input id="uploadImage" type="file" multiple
+        	accept="image/bmp,image/jpeg,image/jpg,image/png,image/gif,application/pdf,image/tiff">
+        <div id="divLog" style="height:400px;"></div>
+    </div>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        document.getElementById('uploadImage').addEventListener('change', function(){
+            var files = this.files;
+            
+            var p;
+            for (p = 0; p < files.length; p++) { 
+            	var fd = new FormData();
+	            fd.append('img', files[p]);
+	            fd.append('path' , document.getElementById('path').value);
+	            $('#divLog').html('');
+	            $('#divLog').append('<p>=== uploading ===</p>');
+	            $('#divLog').append('<br>');
+	            $.ajax({
+	                method: 'POST',
+	                url: 'decodeBarcode.jsp',
+	                data: fd,
+	                processData: false,
+	                contentType: false,
+	                success: 
+	                	function(response){
+		                    if(response && typeof response.length == 'number'){
+		                        for(var i = 0; i < response.length; ++i){
+		                            var pIndex = document.createElement('p');
+		                            $(pIndex).text('Barcode '+(i+1));
+		                            var pVal = document.createElement('p');
+		                            $(pVal).text('Value: '+response[i].barcodeText);
+		                        }
+		                    }else{
+		                        var pRep = document.createElement('p');
+		                        $(pRep).text(response);
+		                    }
+	                	},
+	                error: function(xhr, status, thrown){
+	                    var pRep = document.createElement('p');
+	                    $(pRep).text(status+":"+thrown);
+	                },
+	                complete: function(){
+	                	$('#divLog').append('<p>=== finish ===</p>');
+	                }
+	            })
+            }
+            
+            this.value = '';
+        });
+    </script>
+</body>
+</html>
