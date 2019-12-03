@@ -1,4 +1,4 @@
-package dbr_java_web_helloworld;
+package barcode;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
