@@ -13,7 +13,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/Google Drive/Mine/Coding/barcode/WebContent/WEB-INF/lib/dynamsoft-dbr-6.2-jni.jar"/>
-	<classpathentry kind="lib" path="E:/Google Drive/Mine/Coding/barcode/WebContent/WEB-INF/lib/gson-2.8.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dynamsoft-dbr-6.2-jni.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.8.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
